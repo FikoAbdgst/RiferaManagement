@@ -1,5 +1,12 @@
 "use client"
 
+import Image from "next/image"
+import heroImg from "../assets/image.png"
+import heroine1 from "../assets/teteh1.png"
+import heroine2 from "../assets/teteh2.png"
+import fnbImg from "../assets/creation1.jpg"
+import lifeImg from "../assets/creation2.jpg"
+import beautyImg from "../assets/creation3.jpg"
 import { useState, useEffect, useRef } from "react"
 
 const PURPLE = "#8B5CF6"
@@ -104,9 +111,9 @@ const styles = `
   /* ─── 3. STATS ROW ─── full-bleed pink strip, 3 big numbers */
   .stats-strip { background: ${PINK_MID}; padding: 56px 0; }
   .stats-inner { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; }
-  .stat-block { text-align: center; padding: 0 24px; border-right: 1px solid rgba(139,92,246,0.2); }
+  .stat-block { text-align: center; padding: 0 20px; border-right: 1px solid rgba(139,92,246,0.2); }
   .stat-block:last-child { border-right: none; }
-  .stat-number { font-family: 'Playfair Display', serif; font-size: clamp(36px,5vw,60px); font-weight: 900; color: ${PURPLE}; line-height: 1; margin-bottom: 6px; }
+  .stat-number { font-family: 'Playfair Display', serif; font-size: clamp(36px,5vw,40px); font-weight: 900; color: ${PURPLE}; line-height: 1; margin-bottom: 6px; }
   .stat-label { font-size: 12px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 1px; }
 
   /* ─── 4. CONTENT CREATION ─── white bg, horizontal scroll feel, 3 tall cards */
@@ -114,13 +121,25 @@ const styles = `
   .services-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 16px; }
   .services-sub { font-size: 14px; color: ${MUTED}; max-width: 340px; line-height: 1.6; }
   .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
-  .scard { border-radius: 24px; overflow: hidden; transition: transform 0.22s; position: relative; }
+  .scard { 
+    border-radius: 24px; 
+    overflow: hidden; /* Ini yang membuat sudutnya membulat */
+    transition: transform 0.22s; 
+    position: relative; 
+    /* Tambahkan baris ini untuk memaksa border-radius memotong isinya di beberapa browser */
+    transform: translateZ(0); 
+  }
   .scard:hover { transform: translateY(-6px); }
-  .scard-img { width: 100%; aspect-ratio: 3/4; display: flex; align-items: center; justify-content: center; font-size: 56px; }
+  .scard-img { width: 100%; aspect-ratio: 3/4; position: relative; overflow: hidden; }
   .scard-img.fnb { background: linear-gradient(160deg, #fef3c7, #fde68a); }
   .scard-img.life { background: linear-gradient(160deg, #ddd6fe, #c4b5fd); }
   .scard-img.beauty { background: linear-gradient(160deg, #fce7f3, #fbcfe8); }
-  .scard-body { padding: 18px 20px; background: ${LIGHT_PINK}; }
+  .scard-body { 
+    padding: 18px 20px; 
+    background: ${LIGHT_PINK}; 
+    border-bottom-left-radius: 24px; /* Samakan dengan border-radius .scard */
+    border-bottom-right-radius: 24px; /* Samakan dengan border-radius .scard */
+  }
   .scard-title { font-size: 15px; font-weight: 800; color: ${DARK}; margin-bottom: 4px; }
   .scard-desc { font-size: 12px; color: ${MUTED}; }
 
@@ -200,18 +219,54 @@ const styles = `
   }
   .collab-item:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(139,92,246,0.18); }
 
-  /* ─── 10. PRICING ─── dark bg, staircase pills */
-  .pricing-section { background: ${DARK}; padding: 80px 0; }
-  .pricing-section .section-tag { background: #2a2a2a; border-color: ${PURPLE}; box-shadow: 3px 3px 0 ${PURPLE}; }
-  .pricing-section .section-tag { color: white; }
-  .pricing-wrap { max-width: 580px; margin: 48px auto 0; display: flex; flex-direction: column; gap: 18px; }
-  .ppill { border: 2px solid; border-radius: 999px; padding: 17px 40px; transition: all 0.2s; }
-  .ppill.basic { border-color: #7c3aed; width: 55%; background: #1e1e1e; }
-  .ppill.standar { border-color: #a855f7; width: 78%; align-self: center; background: #1e1e1e; }
-  .ppill.premium { border-color: ${PURPLE}; width: 100%; align-self: flex-end; background: linear-gradient(135deg, #2e1a4a, #1e103a); }
-  .ppill h3 { font-size: 16px; font-weight: 800; color: ${WHITE}; margin-bottom: 2px; }
-  .ppill p { font-size: 13px; font-weight: 700; color: #a78bfa; }
-  .pricing-note { text-align: center; margin-top: 24px; font-size: 13px; font-weight: 700; color: #666; }
+/* ─── 10. PRICING ─── modern cards */
+  .pricing-section { background: ${DARK}; padding: 100px 0; }
+  .pricing-section .section-tag { background: #2a2a2a; border-color: ${PURPLE}; box-shadow: 3px 3px 0 ${PURPLE}; color: white; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 900px; margin: 60px auto 0; align-items: stretch; }
+  
+  .pricing-card {
+    background: #1a1a1a; border: 1px solid #333; border-radius: 24px;
+    padding: 40px 32px; display: flex; flex-direction: column;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .pricing-card:hover { transform: translateY(-8px); border-color: #555; }
+  
+  /* Highlight Card */
+  .pricing-card.premium {
+    background: linear-gradient(145deg, #2a164a, #1a0d2e);
+    border-color: ${PURPLE};
+    box-shadow: 0 20px 40px rgba(139,92,246,0.15);
+    transform: scale(1.05); z-index: 2;
+  }
+  .pricing-card.premium:hover { transform: scale(1.05) translateY(-8px); border-color: #a855f7; }
+  
+  .pricing-badge {
+    position: absolute; top: 16px; right: 16px; background: ${PURPLE}; color: white;
+    font-size: 10px; font-weight: 800; padding: 4px 12px; border-radius: 999px; text-transform: uppercase;
+  }
+  
+  .pricing-name { font-size: 18px; font-weight: 800; color: white; margin-bottom: 8px; }
+  .pricing-price { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: ${PURPLE}; margin-bottom: 24px; line-height: 1; }
+  .pricing-price span { font-family: 'Nunito', sans-serif; font-size: 14px; color: #888; font-weight: 600; }
+  .pricing-card.premium .pricing-price { color: white; }
+  .pricing-card.premium .pricing-price span { color: #a78bfa; }
+  
+  .pricing-features { list-style: none; margin-bottom: 32px; flex: 1; }
+  .pricing-features li { font-size: 14px; color: #bbb; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .pricing-features li::before { content: '✓'; color: ${PURPLE}; font-weight: 800; font-size: 16px; }
+  .pricing-card.premium .pricing-features li::before { color: #e9d5ff; }
+  
+  .pricing-cta {
+    width: 100%; padding: 14px; border-radius: 999px; font-weight: 800; font-size: 14px;
+    text-align: center; cursor: pointer; transition: all 0.2s; border: none;
+  }
+  .pricing-cta.outline { background: transparent; color: white; border: 2px solid #444; }
+  .pricing-cta.outline:hover { background: #333; border-color: #555; }
+  .pricing-cta.filled { background: ${PURPLE}; color: white; box-shadow: 0 4px 14px rgba(139,92,246,0.4); }
+  .pricing-cta.filled:hover { background: #7c3aed; }
+  
+  .pricing-note { text-align: center; margin-top: 40px; font-size: 13px; font-weight: 600; color: #888; }
 
   /* FOOTER */
   .footer { background: ${PURPLE}; color: white; text-align: center; padding: 40px 32px; }
@@ -236,6 +291,10 @@ const styles = `
     .phones-row { grid-template-columns: repeat(2,1fr); }
     .collab-grid { grid-template-columns: repeat(3,1fr); }
     .ppill.basic, .ppill.standar, .ppill.premium { width: 100%; align-self: stretch; }
+
+    .pricing-grid { grid-template-columns: 1fr; max-width: 400px; gap: 32px; margin-top: 40px; }
+    .pricing-card.premium { transform: scale(1); }
+    .pricing-card.premium:hover { transform: translateY(-8px); }
   }
 `
 
@@ -329,36 +388,15 @@ export default function Home() {
             <div className="hero-phone">
               <div className="hero-phone-screen">
                 <div className="phone-notch" />
-                <div className="phone-header">
-                  <div className="phone-avatar">R</div>
-                  <div>
-                    <div className="phone-name">riferamanagement</div>
-                    <div className="phone-bio-text">
-                      KOL & Influencer Agency · Bandung
-                    </div>
-                  </div>
-                </div>
-                <div className="phone-stats">
-                  {[
-                    ["74", "postingan"],
-                    ["447", "pengikut"],
-                    ["19", "mengikuti"],
-                  ].map(([n, l], i) => (
-                    <div className="pstat" key={i}>
-                      <div className="pstat-n">{n}</div>
-                      <div className="pstat-l">{l}</div>
-                    </div>
-                  ))}
-                </div>
-                <div className="phone-grid">
-                  {["🍜", "🧁", "💄", "📸", "🛼", "🌸", "☕", "🎀", "🛍️"].map(
-                    (e, i) => (
-                      <div className="phone-cell" key={i}>
-                        {e}
-                      </div>
-                    ),
-                  )}
-                </div>
+                {/* Ubah src menjadi "/assets/image.png" 
+                  Pastikan file gambar ada di direktori: public/assets/image.png 
+                */}
+                <Image
+                  src={heroImg}
+                  alt="Phone Mockup"
+                  fill
+                  style={{ objectFit: "cover" }}
+                />
               </div>
             </div>
             <div className="hero-text">
@@ -419,11 +457,25 @@ export default function Home() {
             </div>
             <div className="about-cards">
               <div className="polaroid">
-                <div className="polaroid-img">🧕</div>
+                <div className="polaroid-img">
+                  <Image
+                    src={heroine1}
+                    alt="Phone Mockup"
+                    fill
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
                 <div className="polaroid-cap">Content Creator</div>
               </div>
               <div className="polaroid">
-                <div className="polaroid-img">☕</div>
+                <div className="polaroid-img">
+                  <Image
+                    src={heroine2}
+                    alt="Phone Mockup"
+                    fill
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
                 <div className="polaroid-cap">KOL Bandung</div>
               </div>
             </div>
@@ -436,7 +488,7 @@ export default function Home() {
         <div className="container">
           <div className="stats-inner">
             <div className="stat-block">
-              <div className="stat-number">0.59–3.40%</div>
+              <div className="stat-number tracking-widest">0.59–3.40%</div>
               <div className="stat-label">Engagement Rate</div>
             </div>
             <div className="stat-block">
@@ -466,24 +518,34 @@ export default function Home() {
               {
                 title: "F&B Reviewer",
                 desc: "Review restoran, kafe, dan kuliner Bandung & sekitarnya",
-                emoji: "🍽️",
                 cls: "fnb",
               },
               {
                 title: "Life Style & Recreation",
                 desc: "Gaya hidup, aktivitas, hiburan, dan rekreasi keluarga",
-                emoji: "🛼",
                 cls: "life",
               },
               {
                 title: "Beauty & Fashion",
                 desc: "Kecantikan, skincare, makeup, dan fashion terkini",
-                emoji: "💄",
                 cls: "beauty",
               },
             ].map((s, i) => (
               <div className="scard" key={i}>
-                <div className={`scard-img ${s.cls}`}>{s.emoji}</div>
+                <div className={`scard-img ${s.cls}`}>
+                  <Image
+                    src={
+                      s.cls === "fnb"
+                        ? fnbImg
+                        : s.cls === "life"
+                          ? lifeImg
+                          : beautyImg
+                    }
+                    alt={`${s.title} Image`}
+                    fill
+                    style={{ objectFit: "cover" }} // Ini sudah benar
+                  />
+                </div>
                 <div className="scard-body">
                   <div className="scard-title">{s.title}</div>
                   <div className="scard-desc">{s.desc}</div>
@@ -676,28 +738,57 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 10. PRICING — dark bg */}
+      {/* 10. PRICING — modern cards */}
       <section className="pricing-section" id="pricing">
-        <div className="container" style={{ maxWidth: 640 }}>
+        <div className="container">
           <div style={{ textAlign: "center" }}>
             <div className="section-tag">Pricelist</div>
           </div>
-          <div className="pricing-wrap">
-            <div className="ppill basic">
-              <h3>Basic</h3>
-              <p>Rp 800.000 · 10 Talent</p>
+
+          <div className="pricing-grid">
+            {/* Basic Card */}
+            <div className="pricing-card">
+              <div className="pricing-name">Basic</div>
+              <div className="pricing-price">Rp 800K</div>
+              <ul className="pricing-features">
+                <li>10 Talent KOL</li>
+                <li>Briefing & Monitoring</li>
+                <li>Standar Reporting</li>
+              </ul>
+              <button className="pricing-cta outline">Pilih Basic</button>
             </div>
-            <div className="ppill standar">
-              <h3>Standar</h3>
-              <p>Rp 1.250.000 · 20 Talent</p>
+
+            {/* Premium Card (Highlighted) */}
+            <div className="pricing-card premium">
+              <div className="pricing-badge">Best Value</div>
+              <div className="pricing-name">Premium ✨</div>
+              <div className="pricing-price">Rp 1.65M</div>
+              <ul className="pricing-features">
+                <li style={{ color: "white" }}>30 Talent KOL</li>
+                <li style={{ color: "white" }}>Prioritas Pemilihan Talent</li>
+                <li style={{ color: "white" }}>Briefing & Monitoring</li>
+                <li style={{ color: "white" }}>Advanced Reporting + Insight</li>
+              </ul>
+              <button className="pricing-cta filled">Pilih Premium</button>
             </div>
-            <div className="ppill premium">
-              <h3>Premium ✨</h3>
-              <p>Rp 1.650.000 · 30 Talent</p>
+
+            {/* Standar Card */}
+            <div className="pricing-card">
+              <div className="pricing-name">Standar</div>
+              <div className="pricing-price">Rp 1.25M</div>
+              <ul className="pricing-features">
+                <li>20 Talent KOL</li>
+                <li>Briefing & Monitoring</li>
+                <li>Standar Reporting</li>
+              </ul>
+              <button className="pricing-cta outline">Pilih Standar</button>
             </div>
           </div>
+
           <p className="pricing-note">
-            Noted: You can custom the talent by followers (by ratecard)
+            Noted: You can custom the talent by followers (by ratecard).
+            <br />
+            Harga dapat menyesuaikan dengan spesifikasi campaign.
           </p>
         </div>
       </section>
