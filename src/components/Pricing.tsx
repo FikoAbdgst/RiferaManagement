@@ -1,33 +1,51 @@
+// src/components/Pricing.tsx
 export default function Pricing() {
-  const packages = [
-    { name: "Basic", price: "800K", talent: "10 Talent" },
-    { name: "Standar", price: "1,250K", talent: "20 Talent" },
-    { name: "Premium", price: "1,650K", talent: "30 Talent" },
-  ]
-
   return (
-    <section className="py-20 px-8 text-center max-w-4xl mx-auto">
-      <h2 className="text-4xl font-bold text-rifera-purple mb-12 uppercase">
-        Pricelist
-      </h2>
-
-      <div className="flex flex-col gap-6 items-center">
-        {packages.map((pkg, index) => (
-          <div
-            key={index}
-            className="w-full md:w-2/3 bg-white border-2 border-rifera-purple/30 rounded-full py-4 px-8 shadow-md hover:shadow-xl transition-all hover:-translate-y-1"
-          >
-            <h3 className="text-xl font-bold">{pkg.name}</h3>
-            <p className="text-lg font-semibold text-rifera-purple">
-              {pkg.price} - {pkg.talent}
-            </p>
+    <section className="pricing-section" id="pricing">
+      <div className="container">
+        <div style={{ textAlign: "center" }}>
+          <div className="section-tag">Pricelist</div>
+        </div>
+        <div className="pricing-grid">
+          <div className="pricing-card">
+            <div className="pricing-name">Basic</div>
+            <div className="pricing-price">Rp 800K</div>
+            <ul className="pricing-features">
+              <li>10 Talent KOL</li>
+              <li>Briefing & Monitoring</li>
+              <li>Standar Reporting</li>
+            </ul>
+            <button className="pricing-cta outline">Pilih Basic</button>
           </div>
-        ))}
+          <div className="pricing-card premium">
+            <div className="pricing-badge">Best Value</div>
+            <div className="pricing-name">Premium ✨</div>
+            <div className="pricing-price">Rp 1.65M</div>
+            <ul className="pricing-features">
+              <li>30 Talent KOL</li>
+              <li>Prioritas Pemilihan Talent</li>
+              <li>Briefing & Monitoring</li>
+              <li>Advanced Reporting + Insight</li>
+            </ul>
+            <button className="pricing-cta filled">Pilih Premium</button>
+          </div>
+          <div className="pricing-card">
+            <div className="pricing-name">Standar</div>
+            <div className="pricing-price">Rp 1.25M</div>
+            <ul className="pricing-features">
+              <li>20 Talent KOL</li>
+              <li>Briefing & Monitoring</li>
+              <li>Standar Reporting</li>
+            </ul>
+            <button className="pricing-cta outline">Pilih Standar</button>
+          </div>
+        </div>
+        <p className="pricing-note">
+          Noted: You can custom the talent by followers (by ratecard).
+          <br />
+          Harga dapat menyesuaikan dengan spesifikasi campaign.
+        </p>
       </div>
-
-      <p className="mt-8 font-medium">
-        Noted : You can custom the talent by followers (by ratecard)
-      </p>
     </section>
   )
 }
