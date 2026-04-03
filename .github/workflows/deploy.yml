@@ -33,6 +33,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           # Folder 'out' adalah hasil build static Next.js
           port: 21
-          protocol: ftp
           local-dir: ./out/ 
           server-dir: public_html/
