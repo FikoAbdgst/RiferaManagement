@@ -1,4 +1,4 @@
-name: Deploy Website via FTP
+name: Deploy Next.js to cPanel
 
 on:
   push:
@@ -6,22 +6,31 @@ on:
       - main
 
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    # Jika kamu pakai framework (Laravel/Node), jalankan build step di sini
-    # - name: Install Dependencies
-    #   run: npm install && npm run build
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '24.11.0' # Sesuaikan dengan versi Node kamu
+          cache: 'npm'
 
-    - name: 📂 Sync files
-      uses: Samkirkland/FTP-Deploy-Action@v4.3.4
-      with:
-      host: ${{ secrets.SERVER_HOST }}
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build
+        # Pastikan di next.config.js kamu sudah set output: 'export'
+
+      - name: 📂 Sync Files via FTP
+        uses: Samkirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_PASSWORD }}
-        # folder di cPanel, misal: public_html atau sub.domain.com
-        server-dir: public_html/
+          # Folder 'out' adalah hasil build static Next.js
+          local-dir: ./out/ 
+          server-dir: public_html/
