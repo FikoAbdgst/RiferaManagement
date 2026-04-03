@@ -1,0 +1,27 @@
+name: Deploy Website via FTP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v3
+
+    # Jika kamu pakai framework (Laravel/Node), jalankan build step di sini
+    # - name: Install Dependencies
+    #   run: npm install && npm run build
+
+    - name: 📂 Sync files
+      uses: Samkirkland/FTP-Deploy-Action@v4.3.4
+      with:
+      host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_PASSWORD }}
+        # folder di cPanel, misal: public_html atau sub.domain.com
+        server-dir: public_html/
