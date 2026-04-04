@@ -1,23 +1,25 @@
 // src/components/Navbar.tsx
-"use client"
-import { useState } from "react"
+"use client";
+import { useState } from "react";
 
 const navLinks = [
+  { href: "#pricing", label: "Pricing" },
   { href: "#about", label: "About" },
   { href: "#services", label: "Services" },
   { href: "#talent", label: "Talent" },
   { href: "#collab", label: "Clients" },
-  { href: "#pricing", label: "Pricing" },
-]
+];
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <>
       <nav className="nav">
         <div className="nav-inner">
-          <div className="nav-logo">Rifera Management</div>
+          <div className="nav-logo">
+            <a href="#">Rifera Management</a>
+          </div>
           <div className="nav-links">
             {navLinks.map((l) => (
               <a key={l.href} href={l.href}>
@@ -45,5 +47,5 @@ export default function Navbar() {
         ))}
       </div>
     </>
-  )
+  );
 }

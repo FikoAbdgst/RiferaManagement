@@ -1,7 +1,7 @@
 // src/components/Hero.tsx
-"use client"
-import Image from "next/image"
-import heroImg from "../assets/image.png"
+"use client";
+import Image from "next/image";
+import heroImg from "../assets/image.webp";
 
 export default function Hero() {
   return (
@@ -50,5 +50,5 @@ export default function Hero() {
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,8 +1,8 @@
 // src/components/Services.tsx
-import Image from "next/image"
-import fnbImg from "../assets/creation1.jpg"
-import lifeImg from "../assets/creation2.jpg"
-import beautyImg from "../assets/creation3.jpg"
+import Image from "next/image";
+import fnbImg from "../assets/creation1.webp";
+import lifeImg from "../assets/creation2.webp";
+import beautyImg from "../assets/creation3.webp";
 
 export default function Services() {
   const services = [
@@ -24,7 +24,7 @@ export default function Services() {
       cls: "beauty",
       img: beautyImg,
     },
-  ]
+  ];
 
   return (
     <section className="services-section" id="services">
@@ -56,5 +56,5 @@ export default function Services() {
         </div>
       </div>
     </section>
-  )
+  );
 }

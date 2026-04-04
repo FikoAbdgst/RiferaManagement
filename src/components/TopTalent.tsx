@@ -1,14 +1,14 @@
-import talent1 from "../assets/talent1.png"
-import talent2 from "../assets/talent2.png"
-import talent3 from "../assets/talent3.png"
-import talent4 from "../assets/talent4.png"
-import talent5 from "../assets/talent5.png"
-import talent6 from "../assets/talent6.png"
-import talent7 from "../assets/talent7.png"
-import talent8 from "../assets/talent8.png"
-import talent9 from "../assets/talent9.png"
-import talent10 from "../assets/talent10.png"
-import Image from "next/image"
+import talent1 from "../assets/talent1.webp";
+import talent2 from "../assets/talent2.webp";
+import talent3 from "../assets/talent3.webp";
+import talent4 from "../assets/talent4.webp";
+import talent5 from "../assets/talent5.webp";
+import talent6 from "../assets/talent6.webp";
+import talent7 from "../assets/talent7.webp";
+import talent8 from "../assets/talent8.webp";
+import talent9 from "../assets/talent9.webp";
+import talent10 from "../assets/talent10.webp";
+import Image from "next/image";
 
 // src/components/TopTalent.tsx
 
@@ -32,7 +32,7 @@ export default function TopTalent() {
     { handle: "rismaputria", platform: ["ig"], image: talent8 },
     { handle: "firman.agstn", platform: ["tt"], image: talent9 },
     { handle: "adikjajan", platform: ["ig"], image: talent10 },
-  ]
+  ];
 
   return (
     <section className="top-talent-section">
@@ -69,5 +69,5 @@ export default function TopTalent() {
         </div>
       </div>
     </section>
-  )
+  );
 }

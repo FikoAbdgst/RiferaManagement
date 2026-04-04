@@ -1,8 +1,8 @@
 // src/components/About.tsx
-"use client"
-import Image from "next/image"
-import heroine1 from "../assets/teteh1.png"
-import heroine2 from "../assets/teteh2.png"
+"use client";
+import Image from "next/image";
+import heroine1 from "../assets/teteh1.webp";
+import heroine2 from "../assets/teteh2.webp";
 
 export default function About() {
   return (
@@ -58,5 +58,5 @@ export default function About() {
         </div>
       </div>
     </section>
-  )
+  );
 }
