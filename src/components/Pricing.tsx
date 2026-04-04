@@ -9,7 +9,7 @@ export default function Pricing() {
         <div className="pricing-grid">
           <div className="pricing-card">
             <div className="pricing-name">Basic</div>
-            <div className="pricing-price">Rp 800K</div>
+            <div className="pricing-price">Rp 900K</div>
             <ul className="pricing-features">
               <li>10 Talent KOL</li>
               <li>Briefing & Monitoring</li>
@@ -20,7 +20,7 @@ export default function Pricing() {
           <div className="pricing-card premium">
             <div className="pricing-badge">Best Value</div>
             <div className="pricing-name">Premium ✨</div>
-            <div className="pricing-price">Rp 1.65M</div>
+            <div className="pricing-price">Rp 2500k</div>
             <ul className="pricing-features">
               <li>30 Talent KOL</li>
               <li>Prioritas Pemilihan Talent</li>
@@ -31,7 +31,7 @@ export default function Pricing() {
           </div>
           <div className="pricing-card">
             <div className="pricing-name">Standar</div>
-            <div className="pricing-price">Rp 1.25M</div>
+            <div className="pricing-price">Rp 1500k</div>
             <ul className="pricing-features">
               <li>20 Talent KOL</li>
               <li>Briefing & Monitoring</li>

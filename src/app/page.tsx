@@ -21,13 +21,13 @@ export default function Home() {
       <Hero />
       <About />
       <Stats />
+      <Pricing />
       <Services />
       <Together />
       <TalentProfile />
       <TopTalent />
       <ExampleContent />
       <Collaboration />
-      <Pricing />
       <Footer />
     </>
   )
