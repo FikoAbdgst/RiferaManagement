@@ -12,20 +12,41 @@ html {
 }
 
 @layer utilities {
-  .animate-marquee {
-    animation: marquee 40s linear infinite;
+  /* ─── Cult UI Logo Carousel: dual-direction marquee ─── */
+
+  /* Row 1: scroll left */
+  .animate-marquee-left {
+    animation: marquee-left 40s linear infinite;
   }
 
-  @keyframes marquee {
+  /* Row 2: scroll right */
+  .animate-marquee-right {
+    animation: marquee-right 40s linear infinite;
+  }
+
+  @keyframes marquee-left {
     0% {
       transform: translateX(0);
     }
+
     100% {
       transform: translateX(-50%);
     }
   }
-}
 
-.animate-marquee:hover {
-  animation-play-state: paused;
+  @keyframes marquee-right {
+    0% {
+      transform: translateX(-50%);
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  /* Pause on hover for both rows */
+  .animate-marquee-left:hover,
+  .animate-marquee-right:hover {
+    animation-play-state: paused;
+  }
 }
