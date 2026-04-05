@@ -174,8 +174,6 @@ const styles = `
   .cphone-emoji { font-size: 32px; position: relative; z-index: 1; }
   .play-ring { position: absolute; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.82); display: flex; align-items: center; justify-content: center; }
   .play-tri { width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 11px solid ${PURPLE}; margin-left: 2px; }
-  .cphone-label { position: absolute; bottom: 7px; left: 7px; right: 7px; font-size: 9px; font-weight: 700; color: white; }
-  .cphone-link { font-size: 9px; color: ${PURPLE}; text-align: center; margin-top: 5px; text-decoration: underline; word-break: break-all; }
 
   /* ── 9. COLLABORATION ── */
   .collab-section { background: ${WHITE}; padding: 72px 0; }
