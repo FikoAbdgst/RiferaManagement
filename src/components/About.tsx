@@ -1,8 +1,8 @@
 // src/components/About.tsx
-"use client";
-import Image from "next/image";
-import heroine1 from "../assets/content_creator.webp";
-import heroine2 from "../assets/kol_bandung.webp";
+"use client"
+import Image from "next/image"
+import heroine1 from "../assets/content_creator.webp"
+import heroine2 from "../assets/kol_bandung.webp"
 
 export default function About() {
   return (
@@ -33,9 +33,9 @@ export default function About() {
 
             {/* Paragraf 2 mengenai layanan dan kredibilitas */}
             <p className="about-para">
-              Sebagai <strong>Model Management</strong> terpercaya, kami
-              menaungi talenta di bidang F&amp;B, kecantikan, dan lifestyle.
-              Kami melayani kebutuhan <strong>Endorsement</strong>,{" "}
+              Sebagai <strong>Model Management</strong>terpercaya, kami menaungi
+              talenta di bidang F&amp;B, kecantikan, dan lifestyle. Kami
+              melayani kebutuhan <strong>Endorsement</strong>,{" "}
               <strong>Paid Promote (PP)</strong>, hingga penyediaan{" "}
               <strong>Brand Ambassador (BA)</strong> dan{" "}
               <strong>Jasa Photoshoot</strong> profesional di area Bandung dan
@@ -70,5 +70,5 @@ export default function About() {
         </div>
       </div>
     </section>
-  );
+  )
 }
