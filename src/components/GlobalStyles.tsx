@@ -153,9 +153,10 @@ const styles = `
   .tcard { background: ${LIGHT_PINK}; border: 2px solid ${DARK}; padding: 7px 7px 10px; transform: rotate(-1deg); transition: transform 0.2s; cursor: default; }
   .tcard:nth-child(even) { transform: rotate(1deg); }
   .tcard:hover { transform: rotate(0) scale(1.05); z-index: 2; }
-  .tphoto { width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, #fce7f3, #e9d5ff); display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 7px; }
-  .thandle { font-size: 9px; font-weight: 700; color: ${DARK}; text-align: center; line-height: 1.4; }
-  .tplatforms { display: flex; gap: 4px; justify-content: center; margin-top: 5px; }
+ /* Tambahkan overflow: hidden dan position: relative agar gambar tidak keluar dari kotak */
+  .tphoto { width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, #fce7f3, #e9d5ff); display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 7px; overflow: hidden; position: relative; }
+  .thandle { font-size: 9px; font-weight: 700; color: ${DARK}; text-align: center; line-height: 1.4; position: relative; z-index: 10; }
+  .tplatforms { display: flex; gap: 4px; justify-content: center; margin-top: 5px; position: relative; z-index: 10; }
   .tplat { width: 14px; height: 14px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 7px; color: white; font-weight: 800; }
   .tplat.ig { background: linear-gradient(135deg, #f97316, #ec4899); }
   .tplat.tt { background: #111; }
