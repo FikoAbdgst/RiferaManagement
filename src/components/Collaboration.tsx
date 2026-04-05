@@ -39,19 +39,35 @@ const collabs = [
   { name: "Yup", src: "/logos/yup.webp" },
 ]
 
-const COLUMN_COUNT = 9
 const SWAP_INTERVAL = 3000
 const FADE_DURATION = 600
 
-// Helper diletakkan di luar komponen
-function distributeIntoColumns(items: typeof collabs, cols: number) {
-  const columns: (typeof collabs)[] = Array.from({ length: cols }, () => [])
-  items.forEach((item, i) => columns[i % cols].push(item))
-  return columns
+// Layout config per breakpoint:
+// cols  = jumlah kolom yang tampil
+// rows  = jumlah baris yang tampil
+// slots = cols × rows = total logo yang tampil sekaligus
+const LAYOUTS = {
+  mobile: { cols: 3, rows: 3 }, // 9 slot
+  tablet: { cols: 4, rows: 2 }, // 8 slot
+  desktop: { cols: 9, rows: 1 }, // 9 slot
 }
 
-// ─── Single column ───
-function LogoColumn({
+function getLayout() {
+  if (typeof window === "undefined") return LAYOUTS.desktop
+  if (window.innerWidth >= 1024) return LAYOUTS.desktop
+  if (window.innerWidth >= 640) return LAYOUTS.tablet
+  return LAYOUTS.mobile
+}
+
+// Bagi logo ke dalam slot-slot (tiap slot punya array logo untuk di-cycle)
+function distributeIntoSlots(items: typeof collabs, slots: number) {
+  const result: (typeof collabs)[] = Array.from({ length: slots }, () => [])
+  items.forEach((item, i) => result[i % slots].push(item))
+  return result
+}
+
+// ─── Single slot/cell ───
+function LogoSlot({
   logos,
   tick,
   fading,
@@ -69,7 +85,6 @@ function LogoColumn({
   const [hovered, setHovered] = useState(false)
   const index = (startIndex + tick) % logos.length
   const logo = logos[index]
-
   const shouldFade = fading && !hovered
 
   return (
@@ -85,7 +100,7 @@ function LogoColumn({
       }}
     >
       <div
-        className="relative w-[100px] h-[60px]"
+        className="relative w-[72px] h-[44px] sm:w-[90px] sm:h-[54px] lg:w-[100px] lg:h-[60px]"
         style={{
           opacity: hovered ? 1 : shouldFade ? 0 : 0.5,
           transform: shouldFade
@@ -101,12 +116,13 @@ function LogoColumn({
           alt={`Collaboration: ${logo.name}`}
           fill
           className="object-contain"
-          sizes="100px"
+          sizes="(max-width: 640px) 72px, (max-width: 1024px) 90px, 100px"
         />
       </div>
 
+      {/* Tooltip — hidden on mobile (no hover on touch) */}
       <div
-        className="absolute bottom-[-10px] text-[10px] font-medium text-gray-500 text-center whitespace-nowrap"
+        className="hidden sm:block absolute bottom-[-12px] text-[10px] font-medium text-gray-500 text-center whitespace-nowrap"
         style={{
           opacity: hovered ? 1 : 0,
           transform: hovered ? "translateY(0px)" : "translateY(4px)",
@@ -125,18 +141,27 @@ export default function Collaboration() {
   const [tick, setTick] = useState(0)
   const [fading, setFading] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
+  const [layout, setLayout] = useState(LAYOUTS.desktop)
 
   const isPausedRef = useRef(isPaused)
-
-  // FIX: Sinkronkan Ref di dalam useEffect, bukan saat render
   useEffect(() => {
     isPausedRef.current = isPaused
   }, [isPaused])
 
-  // Gunakan useMemo agar distribusi logo tidak dihitung ulang setiap detik
-  const columns = useMemo(
-    () => distributeIntoColumns(collabs, COLUMN_COUNT),
-    [],
+  // Detect breakpoint on mount + resize
+  useEffect(() => {
+    const update = () => setLayout(getLayout())
+    update()
+    window.addEventListener("resize", update)
+    return () => window.removeEventListener("resize", update)
+  }, [])
+
+  const totalSlots = layout.cols * layout.rows
+
+  // Distribute all 33 logos evenly across the visible slots
+  const slots = useMemo(
+    () => distributeIntoSlots(collabs, totalSlots),
+    [totalSlots],
   )
 
   const pause = useCallback(() => setIsPaused(true), [])
@@ -145,16 +170,22 @@ export default function Collaboration() {
   useEffect(() => {
     const interval = setInterval(() => {
       if (isPausedRef.current) return
-
       setFading(true)
       setTimeout(() => {
         setTick((prev) => prev + 1)
         setFading(false)
       }, FADE_DURATION)
     }, SWAP_INTERVAL)
-
     return () => clearInterval(interval)
   }, [])
+
+  // Grid class per breakpoint — cols diambil dari layout state
+  const gridClass =
+    {
+      3: "grid-cols-3",
+      4: "grid-cols-4",
+      9: "grid-cols-9",
+    }[layout.cols] ?? "grid-cols-9"
 
   return (
     <section className="py-20 bg-white" id="collab">
@@ -168,17 +199,19 @@ export default function Collaboration() {
           </h2>
         </div>
 
+        {/*
+          Layout:
+          Mobile  (<640px)  → 3 cols × 3 rows = 9 slot
+          Tablet  (640px+)  → 4 cols × 2 rows = 8 slot
+          Desktop (1024px+) → 9 cols × 1 row  = 9 slot
+        */}
         <div
-          className="relative grid gap-4 mx-auto"
-          style={{
-            gridTemplateColumns: `repeat(${COLUMN_COUNT}, 1fr)`,
-            maxWidth: "1000px",
-          }}
+          className={`grid ${gridClass} gap-x-2 gap-y-4 mx-auto max-w-[960px]`}
         >
-          {columns.map((colLogos, i) => (
-            <LogoColumn
+          {slots.map((slotLogos, i) => (
+            <LogoSlot
               key={i}
-              logos={colLogos}
+              logos={slotLogos}
               tick={tick}
               fading={fading}
               startIndex={i}
@@ -188,7 +221,7 @@ export default function Collaboration() {
           ))}
         </div>
 
-        <p className="text-center text-sm text-gray-400 mt-10">
+        <p className="text-center text-sm text-gray-400 mt-12">
           and many more local brands we&apos;re proud to work with.
         </p>
       </div>
