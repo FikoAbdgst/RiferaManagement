@@ -1,54 +1,54 @@
-"use client";
+"use client"
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react"
 
 type VideoItem = {
-  videoSrc: string;
-  label: string;
-  bg: string;
-  link: string;
-};
+  videoSrc: string
+  label: string
+  bg: string
+  link: string
+}
 
 type VideoCardProps = {
-  item: VideoItem;
-  isPlaying: boolean;
-  onTogglePlay: () => void;
-};
+  item: VideoItem
+  isPlaying: boolean
+  onTogglePlay: () => void
+}
 
 const VideoCard = ({ item, isPlaying, onTogglePlay }: VideoCardProps) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const timelineRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const timelineRef = useRef<HTMLDivElement>(null)
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
     if (isPlaying) {
-      videoRef.current?.play();
+      videoRef.current?.play()
     } else {
-      videoRef.current?.pause();
+      videoRef.current?.pause()
     }
-  }, [isPlaying]);
+  }, [isPlaying])
 
   const handleTimeUpdate = () => {
     if (videoRef.current) {
-      const current = videoRef.current.currentTime;
-      const duration = videoRef.current.duration;
+      const current = videoRef.current.currentTime
+      const duration = videoRef.current.duration
       if (duration > 0) {
-        setProgress((current / duration) * 100);
+        setProgress((current / duration) * 100)
       }
     }
-  };
+  }
 
   const handleTimelineClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
+    e.stopPropagation()
     if (videoRef.current && timelineRef.current) {
-      const rect = timelineRef.current.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const percentage = Math.max(0, Math.min(1, clickX / rect.width));
+      const rect = timelineRef.current.getBoundingClientRect()
+      const clickX = e.clientX - rect.left
+      const percentage = Math.max(0, Math.min(1, clickX / rect.width))
 
-      videoRef.current.currentTime = percentage * videoRef.current.duration;
-      setProgress(percentage * 100);
+      videoRef.current.currentTime = percentage * videoRef.current.duration
+      setProgress(percentage * 100)
     }
-  };
+  }
 
   return (
     <div>
@@ -143,9 +143,6 @@ const VideoCard = ({ item, isPlaying, onTogglePlay }: VideoCardProps) => {
 
       {/* Label nama + link di bawah card */}
       <div style={{ textAlign: "center", marginTop: "12px" }}>
-        <div className="cphone-label" style={{ marginBottom: "4px" }}>
-          {item.label}
-        </div>
         <a
           href={`https://www.instagram.com/reel/${item.link}/`}
           target="_blank"
@@ -163,10 +160,10 @@ const VideoCard = ({ item, isPlaying, onTogglePlay }: VideoCardProps) => {
             cursor: "pointer",
           }}
           onMouseDown={(e) => {
-            e.currentTarget.style.transform = "translate(2px, 2px)";
+            e.currentTarget.style.transform = "translate(2px, 2px)"
           }}
           onMouseUp={(e) => {
-            e.currentTarget.style.transform = "translate(0, 0)";
+            e.currentTarget.style.transform = "translate(0, 0)"
           }}
           onClick={(e) => e.stopPropagation()}
         >
@@ -174,11 +171,11 @@ const VideoCard = ({ item, isPlaying, onTogglePlay }: VideoCardProps) => {
         </a>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default function ExampleContent() {
-  const [playingIndex, setPlayingIndex] = useState<number | null>(null);
+  const [playingIndex, setPlayingIndex] = useState<number | null>(null)
 
   const contentItems: VideoItem[] = [
     {
@@ -205,7 +202,7 @@ export default function ExampleContent() {
       bg: "c4",
       link: "DNFAdNAyQRp",
     },
-  ];
+  ]
 
   return (
     <section className="content-section">
@@ -220,12 +217,12 @@ export default function ExampleContent() {
               item={c}
               isPlaying={playingIndex === i}
               onTogglePlay={() => {
-                setPlayingIndex(playingIndex === i ? null : i);
+                setPlayingIndex(playingIndex === i ? null : i)
               }}
             />
           ))}
         </div>
       </div>
     </section>
-  );
+  )
 }

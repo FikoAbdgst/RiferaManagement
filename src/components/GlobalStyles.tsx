@@ -116,8 +116,8 @@ const styles = `
   .scard-img.fnb { background: linear-gradient(160deg, #fef3c7, #fde68a); }
   .scard-img.life { background: linear-gradient(160deg, #ddd6fe, #c4b5fd); }
   .scard-img.beauty { background: linear-gradient(160deg, #fce7f3, #fbcfe8); }
-  .scard-body { padding: 16px 18px; background: ${LIGHT_PINK}; }
   .scard-title { font-size: 14px; font-weight: 800; color: ${DARK}; margin-bottom: 3px; }
+  .scard-body { padding: 16px 18px; background: ${LIGHT_PINK}; min-height: 72px; border-radius: 0 0 22px 22px; }
   .scard-desc { font-size: 12px; color: ${MUTED}; }
 
   /* ── 5. TOGETHER ── */
