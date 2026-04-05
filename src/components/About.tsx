@@ -1,8 +1,8 @@
 // src/components/About.tsx
 "use client";
 import Image from "next/image";
-import heroine1 from "../assets/teteh1.webp";
-import heroine2 from "../assets/teteh2.webp";
+import heroine1 from "../assets/content_creator.webp";
+import heroine2 from "../assets/kol_bandung.webp";
 
 export default function About() {
   return (
@@ -11,32 +11,44 @@ export default function About() {
         <div className="about-inner">
           <div className="about-text">
             <div className="about-eyebrow">Tentang Kami</div>
+            {/* Headline dengan kata kunci utama */}
             <h2 className="about-heading">
-              Mengelola &amp;
+              Rifera Management:
               <br />
-              Mengembangkan
+              Agency Talent &amp;
               <br />
-              Talenta Digital
+              KOL Specialist Bandung
             </h2>
+
+            {/* Paragraf 1 dengan keyword strategis */}
             <p className="about-para">
-              Kami dari <strong>Rifera Management</strong> — sebuah manajemen
-              yang bergerak di bidang pengelolaan dan pengembangan talenta
-              digital, khususnya <strong>Key Opinion Leader (KOL)</strong>,
-              Influencer, dan Content Creator di berbagai platform media sosial
-              seperti Instagram, TikTok, YouTube, dan lainnya.
+              <strong>Rifera Management</strong> hadir sebagai{" "}
+              <strong>Agency Talent Bandung</strong> yang berfokus pada
+              pengelolaan dan pengembangan talenta digital profesional. Kami
+              menjembatani kolaborasi antara brand dengan para{" "}
+              <strong>KOL Specialist</strong>, Influencer, dan Content Creator
+              berbakat untuk menciptakan kampanye marketing yang berdampak luas
+              di Instagram, TikTok, dan YouTube.
             </p>
+
+            {/* Paragraf 2 mengenai layanan dan kredibilitas */}
             <p className="about-para">
-              Manajemen kami menaungi sejumlah KOL dengan berbagai bidang
-              seperti <strong>F&amp;B, kecantikan</strong>, dan{" "}
-              <strong>life style</strong>.
+              Sebagai <strong>Model Management</strong> terpercaya, kami
+              menaungi talenta di bidang F&amp;B, kecantikan, dan lifestyle.
+              Kami melayani kebutuhan <strong>Endorsement</strong>,{" "}
+              <strong>Paid Promote (PP)</strong>, hingga penyediaan{" "}
+              <strong>Brand Ambassador (BA)</strong> dan{" "}
+              <strong>Jasa Photoshoot</strong> profesional di area Bandung dan
+              sekitarnya.
             </p>
           </div>
+
           <div className="about-cards">
             <div className="polaroid">
               <div className="polaroid-img">
                 <Image
                   src={heroine1}
-                  alt="Content Creator"
+                  alt="Talent Agency Bandung - Rifera Management" // Alt text SEO
                   fill
                   style={{ objectFit: "cover" }}
                 />
@@ -47,7 +59,7 @@ export default function About() {
               <div className="polaroid-img">
                 <Image
                   src={heroine2}
-                  alt="KOL Bandung"
+                  alt="KOL Specialist Bandung - Rifera Management" // Alt text SEO
                   fill
                   style={{ objectFit: "cover" }}
                 />
