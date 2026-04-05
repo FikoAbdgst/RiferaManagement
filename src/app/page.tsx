@@ -12,6 +12,7 @@ import ExampleContent from "../components/ExampleContent";
 import Collaboration from "../components/Collaboration";
 import Pricing from "../components/Pricing";
 import Footer from "../components/Footer";
+import WhatsAppButton from "../components/WhatsAppButton";
 
 export default function Home() {
   return (
@@ -29,6 +30,7 @@ export default function Home() {
       <ExampleContent />
       <Collaboration />
       <Footer />
+      <WhatsAppButton />
     </>
   );
 }

@@ -10,6 +10,7 @@ export default function Footer() {
       <div className="footer-socials">
         Instagram: @riferamanagement · TikTok: @rifera.management
       </div>
+      <div className="footer-socials">Whatsapp: 0895379907610/089531610100</div>
     </footer>
-  )
+  );
 }
