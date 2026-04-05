@@ -12,7 +12,7 @@ export default function Together() {
       desc: "Konten dibuat sesuai brief, on-brand, dan tepat sasaran.",
     },
     {
-      emoji: "🐷",
+      emoji: "💎",
       title: "Get benefit for client",
       desc: "Visibilitas meningkat, engagement nyata, ROI terukur.",
     },
