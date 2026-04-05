@@ -1,67 +1,124 @@
-import talent1 from "../assets/talent1.webp";
-import talent2 from "../assets/talent2.webp";
-import talent3 from "../assets/talent3.webp";
-import talent4 from "../assets/talent4.webp";
-import talent5 from "../assets/talent5.webp";
-import talent6 from "../assets/talent6.webp";
-import talent7 from "../assets/talent7.webp";
-import talent8 from "../assets/talent8.webp";
-import talent9 from "../assets/talent9.webp";
-import talent10 from "../assets/talent10.webp";
+// src/components/TopTalent.tsx
 import Image from "next/image";
 
-// src/components/TopTalent.tsx
+// 1. Tentukan path ikon (di folder public/icons/)
+const igIcon = "/icons/instagram.svg";
+const ttIcon = "/icons/tiktok.svg";
 
 export default function TopTalent() {
   const talents = [
-    { handle: "najwas.s", platform: ["ig"], image: talent1 },
-    { handle: "tasyameng\ntasyaameng", platform: ["ig", "tt"], image: talent2 },
-    { handle: "laporpaksayalapar", platform: ["tt"], image: talent3 },
     {
-      handle: "larasanjanii\nhelloladybull",
-      platform: ["ig", "tt"],
-      image: talent4,
+      handle: "najwas.s",
+      platform: ["ig"],
+      // 2. Gunakan path string ke gambar di public/talents/
+      image: "/talents/najwas.s.webp",
+      alt: "Foto Najwa S - Talent Rifera Management", // Alt text SEO
     },
-    { handle: "corrifebriyani", platform: ["ig"], image: talent5 },
     {
-      handle: "foodventurebndung_\nridwan.maulanaa_",
+      handle: "tasyaameng", // Rapikan handle
       platform: ["ig", "tt"],
-      image: talent6,
+      image: "/talents/tasyaameng.webp",
+      alt: "Foto Tasya Meng - Talent Rifera Management",
     },
-    { handle: "maylanimelaney", platform: ["ig"], image: talent7 },
-    { handle: "rismaputria", platform: ["ig"], image: talent8 },
-    { handle: "firman.agstn", platform: ["tt"], image: talent9 },
-    { handle: "adikjajan", platform: ["ig"], image: talent10 },
+    {
+      handle: "laporpaksayalapar",
+      platform: ["tt"],
+      image: "/talents/laporpaksayalapar.webp",
+      alt: "Foto Lapor Pak Saya Lapar - Talent Rifera Management",
+    },
+    {
+      handle: "larasanjanii",
+      platform: ["ig", "tt"],
+      image: "/talents/larasanjanii.webp",
+      alt: "Foto Laras Anjani - Talent Rifera Management",
+    },
+    {
+      handle: "corrifebriyani",
+      platform: ["ig"],
+      image: "/talents/corrifebriyani.webp",
+      alt: "Foto Corri Febriyani - Talent Rifera Management",
+    },
+    {
+      handle: "ridwan.maulanaa",
+      platform: ["ig", "tt"],
+      image: "/talents/ridwan.maulanaa.webp",
+      alt: "Foto Ridwan Maulana - Talent Rifera Management",
+    },
+    {
+      handle: "maylanimelaney",
+      platform: ["ig"],
+      image: "/talents/maylanimelaney.webp",
+      alt: "Foto Maylani Melaney - Talent Rifera Management",
+    },
+    {
+      handle: "rismaputria",
+      platform: ["ig"],
+      image: "/talents/rismaputria.webp",
+      alt: "Foto Risma Putria - Talent Rifera Management",
+    },
+    {
+      handle: "firman.agstn",
+      platform: ["tt"],
+      image: "/talents/firman.agstn.webp",
+      alt: "Foto Firman Agustin - Talent Rifera Management",
+    },
+    {
+      handle: "adikjajan",
+      platform: ["ig"],
+      image: "/talents/adikjajan.webp",
+      alt: "Foto Adik Jajan - Talent Rifera Management",
+    },
   ];
 
   return (
-    <section className="top-talent-section">
-      <div className="container">
+    <section className="top-talent-section py-20 bg-gray-50">
+      <div className="container mx-auto px-4">
         <div style={{ textAlign: "center", marginBottom: 36 }}>
-          <div className="section-tag">Top Talent</div>
+          <div className="section-tag inline-block px-3 py-1 text-sm font-medium bg-gray-100 rounded-full">
+            Top Talent
+          </div>
         </div>
-        <div className="talent-grid">
+        <div className="talent-grid grid grid-cols-2 md:grid-cols-5 gap-6">
           {talents.map((t, i) => (
-            <div className="tcard" key={i}>
-              <div className="tphoto">
+            <div
+              className="tcard bg-white p-4 rounded-xl shadow-sm hover:shadow-lg transition-all"
+              key={i}
+            >
+              <div className="tphoto relative aspect-[3/4] overflow-hidden rounded-lg mb-4">
+                {/* 3. Gunakan Image dengan path string */}
                 <Image
                   src={t.image}
-                  alt={t.handle}
+                  alt={t.alt}
                   fill
                   style={{ objectFit: "cover" }}
                 />
               </div>
-              <div className="thandle">
-                {t.handle.split("\n").map((l, j) => (
-                  <div key={j}>{l}</div>
-                ))}
+              <div className="thandle text-center mb-3">
+                <div className="font-semibold text-gray-900">@{t.handle}</div>
               </div>
-              <div className="tplatforms">
+              <div className="tplatforms flex justify-center gap-2">
+                {/* 4. Ganti teks dengan ikon Image SVG */}
                 {t.platform.includes("ig") && (
-                  <div className="tplat ig">IG</div>
+                  <div className="flex items-center justify-center">
+                    <Image
+                      src={igIcon}
+                      alt="Instagram Logo"
+                      width={20}
+                      height={20}
+                      className="object-contain"
+                    />
+                  </div>
                 )}
                 {t.platform.includes("tt") && (
-                  <div className="tplat tt">TT</div>
+                  <div className="flex items-center justify-center">
+                    <Image
+                      src={ttIcon}
+                      alt="TikTok Logo"
+                      width={20}
+                      height={20}
+                      className="object-contain"
+                    />
+                  </div>
                 )}
               </div>
             </div>
