@@ -42,10 +42,6 @@ const collabs = [
 const SWAP_INTERVAL = 3000
 const FADE_DURATION = 600
 
-// Layout config per breakpoint:
-// cols  = jumlah kolom yang tampil
-// rows  = jumlah baris yang tampil
-// slots = cols × rows = total logo yang tampil sekaligus
 const LAYOUTS = {
   mobile: { cols: 3, rows: 3 }, // 9 slot
   tablet: { cols: 4, rows: 2 }, // 8 slot
@@ -59,7 +55,6 @@ function getLayout() {
   return LAYOUTS.mobile
 }
 
-// Bagi logo ke dalam slot-slot (tiap slot punya array logo untuk di-cycle)
 function distributeIntoSlots(items: typeof collabs, slots: number) {
   const result: (typeof collabs)[] = Array.from({ length: slots }, () => [])
   items.forEach((item, i) => result[i % slots].push(item))
@@ -72,6 +67,7 @@ function LogoSlot({
   tick,
   fading,
   startIndex = 0,
+  isMobile, // Props baru untuk mendeteksi mode mobile
   onHover,
   onLeave,
 }: {
@@ -79,6 +75,7 @@ function LogoSlot({
   tick: number
   fading: boolean
   startIndex?: number
+  isMobile: boolean
   onHover: () => void
   onLeave: () => void
 }) {
@@ -102,11 +99,13 @@ function LogoSlot({
       <div
         className="relative w-[72px] h-[44px] sm:w-[90px] sm:h-[54px] lg:w-[100px] lg:h-[60px]"
         style={{
-          opacity: hovered ? 1 : shouldFade ? 0 : 0.5,
+          // Jika mobile, opacity selalu 1. Jika desktop, opacity 0.5 lalu 1 saat hover.
+          opacity: hovered ? 1 : shouldFade ? 0 : isMobile ? 1 : 0.5,
           transform: shouldFade
             ? "translateY(6px) scale(0.97)"
             : "translateY(0px) scale(1)",
-          filter: hovered ? "grayscale(0%)" : "grayscale(100%)",
+          // Jika mobile atau sedang di-hover, warna penuh. Jika tidak, grayscale.
+          filter: isMobile || hovered ? "grayscale(0%)" : "grayscale(100%)",
           transition: `opacity ${FADE_DURATION}ms ease, transform ${FADE_DURATION}ms ease, filter 300ms ease`,
         }}
         title={logo.name}
@@ -120,7 +119,7 @@ function LogoSlot({
         />
       </div>
 
-      {/* Tooltip — hidden on mobile (no hover on touch) */}
+      {/* Tooltip — hidden on mobile */}
       <div
         className="hidden sm:block absolute bottom-[-12px] text-[10px] font-medium text-gray-500 text-center whitespace-nowrap"
         style={{
@@ -148,7 +147,6 @@ export default function Collaboration() {
     isPausedRef.current = isPaused
   }, [isPaused])
 
-  // Detect breakpoint on mount + resize
   useEffect(() => {
     const update = () => setLayout(getLayout())
     update()
@@ -158,7 +156,6 @@ export default function Collaboration() {
 
   const totalSlots = layout.cols * layout.rows
 
-  // Distribute all 33 logos evenly across the visible slots
   const slots = useMemo(
     () => distributeIntoSlots(collabs, totalSlots),
     [totalSlots],
@@ -179,13 +176,15 @@ export default function Collaboration() {
     return () => clearInterval(interval)
   }, [])
 
-  // Grid class per breakpoint — cols diambil dari layout state
   const gridClass =
     {
       3: "grid-cols-3",
       4: "grid-cols-4",
       9: "grid-cols-9",
     }[layout.cols] ?? "grid-cols-9"
+
+  // Deteksi apakah sedang dalam mode mobile (menggunakan referensi kolom = 3)
+  const isMobileView = layout.cols === 3
 
   return (
     <section className="py-20 bg-white" id="collab">
@@ -199,12 +198,6 @@ export default function Collaboration() {
           </h2>
         </div>
 
-        {/*
-          Layout:
-          Mobile  (<640px)  → 3 cols × 3 rows = 9 slot
-          Tablet  (640px+)  → 4 cols × 2 rows = 8 slot
-          Desktop (1024px+) → 9 cols × 1 row  = 9 slot
-        */}
         <div
           className={`grid ${gridClass} gap-x-2 gap-y-4 mx-auto max-w-[960px]`}
         >
@@ -215,6 +208,7 @@ export default function Collaboration() {
               tick={tick}
               fading={fading}
               startIndex={i}
+              isMobile={isMobileView} // Melempar state isMobile ke LogoSlot
               onHover={pause}
               onLeave={resume}
             />
