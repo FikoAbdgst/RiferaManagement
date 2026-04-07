@@ -1,8 +1,8 @@
 // src/components/About.tsx
-"use client"
-import Image from "next/image"
-import heroine1 from "../assets/content_creator.webp"
-import heroine2 from "../assets/kol_bandung.webp"
+"use client";
+import Image from "next/image";
+import heroine1 from "../assets/content_creator.webp";
+import heroine2 from "../assets/kol_bandung.webp";
 
 export default function About() {
   return (
@@ -48,8 +48,9 @@ export default function About() {
               <div className="polaroid-img">
                 <Image
                   src={heroine1}
-                  alt="Talent Agency Bandung - Rifera Management" // Alt text SEO
+                  alt="Talent Agency Bandung - Rifera Management"
                   fill
+                  priority
                   style={{ objectFit: "cover" }}
                 />
               </div>
@@ -70,5 +71,5 @@ export default function About() {
         </div>
       </div>
     </section>
-  )
+  );
 }

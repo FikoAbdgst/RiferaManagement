@@ -6,6 +6,7 @@ import "./globals.css";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter", // Menautkan ke variabel CSS yang dipakai di globals.css
+  display: "swap",
 });
 
 export const metadata: Metadata = {
