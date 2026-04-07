@@ -479,7 +479,7 @@ export default function Gallery() {
             }}
           >
             <Image
-              src="/logos/carry_me.webp"
+              src="/logos/carryme.webp"
               alt="Featured Brand Carry Me - Circular Logo"
               width={100}
               height={100}
