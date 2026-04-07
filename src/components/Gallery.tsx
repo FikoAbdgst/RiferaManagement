@@ -1,182 +1,182 @@
 // src/components/Gallery.tsx
-"use client"
+"use client";
 
-import Image from "next/image"
-import { useState, useEffect, useCallback, useRef } from "react"
+import Image from "next/image";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 const galleryItems = [
   {
     id: 1,
     src: "/galleries/carryme1.webp",
-    alt: "Gallery 1",
+    alt: "Talent Model Photoshoot Rifera x Carry Me",
     aspectRatio: "2/3",
   },
   {
     id: 2,
     src: "/galleries/carryme2.webp",
-    alt: "Gallery 2",
+    alt: "Photoshoot Produk Carry Me bersama Talent Rifera",
     aspectRatio: "1/1",
   },
   {
     id: 3,
     src: "/galleries/carryme3.webp",
-    alt: "Gallery 3",
+    alt: "Model Management Bandung untuk Brand Carry Me",
     aspectRatio: "3/4",
   },
   {
     id: 4,
     src: "/galleries/carryme4.webp",
-    alt: "Gallery 4",
+    alt: "Sesi Foto Produk Carry Me di Bandung oleh Rifera Management",
     aspectRatio: "1/1",
   },
   {
     id: 5,
     src: "/galleries/carryme6.webp",
-    alt: "Gallery 5",
+    alt: "Kolaborasi Eksklusif Rifera Management x Carry Me Photoshoot",
     aspectRatio: "9/16",
   },
   {
     id: 6,
     src: "/galleries/carryme5.webp",
-    alt: "Gallery 6",
+    alt: "Katalog Produk Carry Me dengan Model dari Rifera Management",
     aspectRatio: "1/1",
   },
   {
     id: 7,
     src: "/galleries/carryme7.webp",
-    alt: "Gallery 7",
+    alt: "Talent Model Profesional untuk Brand Fashion Carry Me",
     aspectRatio: "2/3",
   },
   {
     id: 8,
     src: "/galleries/carryme8.webp",
-    alt: "Gallery 8",
+    alt: "Jasa Photoshoot Produk Bandung - Rifera x Carry Me",
     aspectRatio: "4/5",
   },
   {
     id: 9,
     src: "/galleries/carryme9.webp",
-    alt: "Gallery 9",
+    alt: "Portfolio Photoshoot Talent Rifera untuk Brand Lokal Carry Me",
     aspectRatio: "1/1",
   },
   {
     id: 10,
     src: "/galleries/carryme10.webp",
-    alt: "Gallery 10",
+    alt: "Model Photoshoot Carry Me oleh Agency Talent Bandung",
     aspectRatio: "3/4",
   },
   {
     id: 11,
     src: "/galleries/carryme11.webp",
-    alt: "Gallery 11",
+    alt: "Konten Visual Produk Carry Me Bersama Talent Rifera",
     aspectRatio: "9/16",
   },
   {
     id: 12,
     src: "/galleries/carryme12.webp",
-    alt: "Gallery 12",
+    alt: "Kerjasama Branding Rifera Management dan Carry Me Bandung",
     aspectRatio: "4/3",
   },
   {
     id: 13,
     src: "/galleries/carryme13.webp",
-    alt: "Gallery 13",
+    alt: "Hasil Photoshoot Outdoor Produk Carry Me dengan Model Rifera",
     aspectRatio: "2/3",
   },
   {
     id: 14,
     src: "/galleries/carryme14.webp",
-    alt: "Gallery 14",
+    alt: "Talent Rifera Management dalam Sesi Foto Brand Carry Me",
     aspectRatio: "1/1",
   },
   {
     id: 15,
     src: "/galleries/carryme15.webp",
-    alt: "Gallery 15",
+    alt: "Dokumentasi Kolaborasi Photoshoot Rifera x Carry Me Bandung",
     aspectRatio: "4/3",
   },
-]
+];
 
 export default function Gallery() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   // ── Touch swipe state ──
-  const touchStartX = useRef<number | null>(null)
-  const touchStartY = useRef<number | null>(null)
-  const isDragging = useRef(false)
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const isDragging = useRef(false);
 
-  const openModal = (index: number) => setActiveIndex(index)
-  const closeModal = () => setActiveIndex(null)
+  const openModal = (index: number) => setActiveIndex(index);
+  const closeModal = () => setActiveIndex(null);
 
   const goPrev = useCallback(() => {
-    if (activeIndex === null) return
+    if (activeIndex === null) return;
     setActiveIndex(
       (activeIndex - 1 + galleryItems.length) % galleryItems.length,
-    )
-  }, [activeIndex])
+    );
+  }, [activeIndex]);
 
   const goNext = useCallback(() => {
-    if (activeIndex === null) return
-    setActiveIndex((activeIndex + 1) % galleryItems.length)
-  }, [activeIndex])
+    if (activeIndex === null) return;
+    setActiveIndex((activeIndex + 1) % galleryItems.length);
+  }, [activeIndex]);
 
   // Keyboard + scroll lock
   useEffect(() => {
-    if (activeIndex === null) return
+    if (activeIndex === null) return;
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeModal()
-      if (e.key === "ArrowLeft") goPrev()
-      if (e.key === "ArrowRight") goNext()
-    }
-    document.addEventListener("keydown", handleKey)
-    document.body.style.overflow = "hidden"
+      if (e.key === "Escape") closeModal();
+      if (e.key === "ArrowLeft") goPrev();
+      if (e.key === "ArrowRight") goNext();
+    };
+    document.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
     return () => {
-      document.removeEventListener("keydown", handleKey)
-      document.body.style.overflow = ""
-    }
-  }, [activeIndex, goPrev, goNext])
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [activeIndex, goPrev, goNext]);
 
   // ── Touch handlers ──
   const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX
-    touchStartY.current = e.touches[0].clientY
-    isDragging.current = false
-  }
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    isDragging.current = false;
+  };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (touchStartX.current === null || touchStartY.current === null) return
-    const deltaX = Math.abs(e.touches[0].clientX - touchStartX.current)
-    const deltaY = Math.abs(e.touches[0].clientY - touchStartY.current)
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const deltaX = Math.abs(e.touches[0].clientX - touchStartX.current);
+    const deltaY = Math.abs(e.touches[0].clientY - touchStartY.current);
     // Jika gerakan horizontal lebih dominan, anggap swipe horizontal
     if (deltaX > deltaY && deltaX > 8) {
-      isDragging.current = true
-      e.stopPropagation() // cegah backdrop close terpicu
+      isDragging.current = true;
+      e.stopPropagation(); // cegah backdrop close terpicu
     }
-  }
+  };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return
-    const deltaX = e.changedTouches[0].clientX - touchStartX.current
+    if (touchStartX.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
     const deltaY = Math.abs(
       e.changedTouches[0].clientY - (touchStartY.current ?? 0),
-    )
+    );
 
-    const SWIPE_THRESHOLD = 50 // minimum px untuk dianggap swipe
+    const SWIPE_THRESHOLD = 50; // minimum px untuk dianggap swipe
 
     if (Math.abs(deltaX) > SWIPE_THRESHOLD && Math.abs(deltaX) > deltaY) {
       if (deltaX < 0)
-        goNext() // swipe kiri → next
-      else goPrev() // swipe kanan → prev
+        goNext(); // swipe kiri → next
+      else goPrev(); // swipe kanan → prev
     } else if (!isDragging.current) {
       // Bukan swipe, tap biasa → tutup modal (jika tap di backdrop)
     }
 
-    touchStartX.current = null
-    touchStartY.current = null
-    isDragging.current = false
-  }
+    touchStartX.current = null;
+    touchStartY.current = null;
+    isDragging.current = false;
+  };
 
-  const activeItem = activeIndex !== null ? galleryItems[activeIndex] : null
+  const activeItem = activeIndex !== null ? galleryItems[activeIndex] : null;
 
   return (
     <section className="gallery-section" id="gallery">
@@ -441,13 +441,53 @@ export default function Gallery() {
 
       <div className="container">
         <div className="gallery-header">
-          <span className="section-tag">Gallery</span>
+          <span className="section-tag">Featured Portfolio</span>
+
           <h2 className="gallery-heading">
-            Karya <span>Terbaik</span> Kami
+            Penyedia Talent <span>Model Photoshoot</span>
           </h2>
-          <p className="gallery-sub">
-            Momen dan konten pilihan dari para kreator kami.
+
+          <p
+            className="gallery-sub"
+            style={{ maxWidth: "600px", margin: "8px auto" }}
+          >
+            Rifera Management menyediakan talent model profesional untuk
+            kebutuhan photoshoot produk. Berikut adalah dokumentasi hasil
+            kolaborasi kami bersama brand <strong>Carry Me</strong>.
           </p>
+        </div>
+
+        <div
+          style={{
+            marginTop: "-12px",
+            marginBottom: "48px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              width: "96px",
+              height: "96px",
+              borderRadius: "50%",
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow:
+                "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)", // Sedikit shadow agar estetik
+            }}
+          >
+            <Image
+              src="/logos/carry_me.webp"
+              alt="Featured Brand Carry Me - Circular Logo"
+              width={100}
+              height={100}
+              style={{
+                objectFit: "cover",
+              }}
+            />
+          </div>
         </div>
 
         {/* ── MASONRY GRID ── */}
@@ -498,8 +538,8 @@ export default function Gallery() {
           <button
             className="modal-arrow prev"
             onClick={(e) => {
-              e.stopPropagation()
-              goPrev()
+              e.stopPropagation();
+              goPrev();
             }}
             aria-label="Sebelumnya"
           >
@@ -530,8 +570,8 @@ export default function Gallery() {
           <button
             className="modal-arrow next"
             onClick={(e) => {
-              e.stopPropagation()
-              goNext()
+              e.stopPropagation();
+              goNext();
             }}
             aria-label="Berikutnya"
           >
@@ -563,5 +603,5 @@ export default function Gallery() {
         </div>
       )}
     </section>
-  )
+  );
 }
