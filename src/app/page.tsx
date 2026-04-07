@@ -1,18 +1,19 @@
 // src/app/page.tsx
-import GlobalStyles from "../components/GlobalStyles";
-import Navbar from "../components/Navbar";
-import Hero from "../components/Hero";
-import About from "../components/About";
-import Stats from "../components/Stats";
-import Services from "../components/Services";
-import Together from "../components/Together";
-import TalentProfile from "../components/TalentProfile";
-import TopTalent from "../components/TopTalent";
-import ExampleContent from "../components/ExampleContent";
-import Collaboration from "../components/Collaboration";
-import Pricing from "../components/Pricing";
-import Footer from "../components/Footer";
-import WhatsAppButton from "../components/WhatsAppButton";
+import GlobalStyles from "../components/GlobalStyles"
+import Navbar from "../components/Navbar"
+import Hero from "../components/Hero"
+import About from "../components/About"
+import Stats from "../components/Stats"
+import Services from "../components/Services"
+import Together from "../components/Together"
+import TalentProfile from "../components/TalentProfile"
+import TopTalent from "../components/TopTalent"
+import ExampleContent from "../components/ExampleContent"
+import Collaboration from "../components/Collaboration"
+import Pricing from "../components/Pricing"
+import Footer from "../components/Footer"
+import WhatsAppButton from "../components/WhatsAppButton"
+import Gallery from "@/components/Gallery"
 
 export default function Home() {
   return (
@@ -29,8 +30,9 @@ export default function Home() {
       <TopTalent />
       <ExampleContent />
       <Collaboration />
+      <Gallery />
       <Footer />
       <WhatsAppButton />
     </>
-  );
+  )
 }
